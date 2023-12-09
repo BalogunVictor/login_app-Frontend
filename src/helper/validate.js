@@ -33,6 +33,13 @@ export async function registerValidations(values) {
   return errors;
 }
 
+/* validate profile page */
+
+export async function profileValidate(values) {
+  const errors = emailVerify({}, values);
+  return errors;
+}
+
 /** validate password */
 function passwordVerify(errors = {}, values) {
   /* eslint-disable no-useless-escape */
