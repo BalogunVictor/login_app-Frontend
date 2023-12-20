@@ -1,38 +1,61 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import avatar from "../assets/profile.png";
 import convertToBase64 from "../helper/convert";
+import { updateUser } from "../helper/helper";
 import { profileValidate } from "../helper/validate";
-import styles from "../styles/Username.module.css";
+import useFetch from "../hooks/fetch.hook";
 import extend from "../styles/Profile.module.css";
+import styles from "../styles/Username.module.css";
 
 const Profile = () => {
   const [file, setFile] = useState();
+  const [{ isLoading, apiData, serverError }] = useFetch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      address: "",
-      mobile: "",
+      firstName: apiData?.firstName || "",
+      lastName: apiData?.lastName || "",
+      email: apiData?.email || "",
+      address: apiData?.address || "",
+      mobile: apiData?.mobile || "",
     },
+    enableReinitialize: true,
     validate: profileValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = await Object.assign(values, { profile: file || "" });
-      console.log(values);
+      values = await Object.assign(values, {
+        profile: file || apiData?.profile || "",
+      });
+      let updatePromise = updateUser(values);
+
+      toast.promise(updatePromise, {
+        loading: "Updating...",
+        success: <b>Update Successfully...!</b>,
+        error: <b>Could not Update!</b>,
+      });
     },
   });
 
   /** formik doesn't support file upload---created this handler */
   const onUpload = async (e) => {
-    const base64 = await convertToBase64();
+    const base64 = await convertToBase64(e.target.files[0]);
     setFile(base64);
   };
+
+  //logout handler function
+  function userLogout() {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
+
+  if (isLoading) return <hi className="text-2xl font-bold">isLoading</hi>;
+  if (serverError)
+    return <hi className="text-xl text-red-500">{serverError.message}</hi>;
 
   return (
     <div className="container mx-auto">
@@ -54,11 +77,12 @@ const Profile = () => {
             <div className="profile flex justify-center py-4">
               <label htmlFor="profile">
                 <img
-                  src={file || avatar}
+                  src={apiData?.profile || file || avatar}
                   className={`${styles.profile_img} ${extend.profile_img}`}
                   alt="avatar"
                 />
               </label>
+
               <input
                 onChange={onUpload}
                 type="file"
@@ -73,13 +97,13 @@ const Profile = () => {
                   {...formik.getFieldProps("firstName")}
                   className={`${styles.textbox} ${extend.textbox}`}
                   type="text"
-                  placeholder="first name"
+                  placeholder="FirstName"
                 />
                 <input
                   {...formik.getFieldProps("lastName")}
                   className={`${styles.textbox} ${extend.textbox}`}
                   type="text"
-                  placeholder="last name"
+                  placeholder="LastName"
                 />
               </div>
 
@@ -88,13 +112,13 @@ const Profile = () => {
                   {...formik.getFieldProps("mobile")}
                   className={`${styles.textbox} ${extend.textbox}`}
                   type="text"
-                  placeholder="mobile No."
+                  placeholder="Mobile No."
                 />
                 <input
                   {...formik.getFieldProps("email")}
                   className={`${styles.textbox} ${extend.textbox}`}
                   type="text"
-                  placeholder="email"
+                  placeholder="Email*"
                 />
               </div>
 
@@ -102,19 +126,19 @@ const Profile = () => {
                 {...formik.getFieldProps("address")}
                 className={`${styles.textbox} ${extend.textbox}`}
                 type="text"
-                placeholder="address"
+                placeholder="Address"
               />
               <button className={styles.btn} type="submit">
-                Sign in
+                Update
               </button>
             </div>
 
             <div className="text-center py-4">
               <span className="text-gray-500">
-                come back later
-                <Link className="text-red-500" to="/recovery">
+                come back later?{" "}
+                <button onClick={userLogout} className="text-red-500" to="/">
                   Logout
-                </Link>
+                </button>
               </span>
             </div>
           </form>
