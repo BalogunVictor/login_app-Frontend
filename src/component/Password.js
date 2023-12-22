@@ -40,9 +40,9 @@ const Password = () => {
     },
   });
 
-  if (isLoading) return <hi className="text-2xl font-bold">isLoading</hi>;
+  if (isLoading) return <h1 className="text-2xl font-bold">isLoading</h1>;
   if (serverError)
-    return <hi className="text-xl text-red-500">{serverError.message}</hi>;
+    return <h1 className="text-xl text-red-500">{serverError.message}</h1>;
   return (
     <div className="container mx-auto">
       <Toaster position="top-center"></Toaster>

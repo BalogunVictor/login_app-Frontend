@@ -22,7 +22,7 @@ const Register = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      values = await Object.assign(values, { profile: file || "" });
+      values = Object.assign(values, { profile: file || "" });
       let registerPromise = registerUser(values);
       toast.promise(registerPromise, {
         loading: "Creating...",
@@ -92,7 +92,7 @@ const Register = () => {
               <input
                 {...formik.getFieldProps("password")}
                 className={styles.textbox}
-                type="text"
+                type="password"
                 placeholder="Password*"
               />
               <button className={styles.btn} type="submit">
