@@ -43,74 +43,76 @@ const Register = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container w-1/2 mx-auto mt-5">
       <Toaster position="top-center"></Toaster>
 
-      <div className="flex justify-center items-center h-screen">
-        <div
-          className={styles.glass}
-          style={{ width: "45%", paddingTop: "3em" }}
-        >
-          <div className="title flex flex-col items-center">
-            <h4 className="text-5xl font-bold">Register</h4>
-            <span className="py-4 text-xl w-2/3 text-center text-gray-500">
-              Happy to join you!
-            </span>
-          </div>
-
-          <form className="py-1" onSubmit={formik.handleSubmit}>
-            <div className="profile flex justify-center py-4">
-              <label htmlFor="profile">
-                <img
-                  src={file || avatar}
-                  className={styles.profile_img}
-                  alt="avatar"
-                />
-              </label>
-
-              <input
-                onChange={onUpload}
-                type="file"
-                id="profile"
-                name="profile"
-              />
-            </div>
-
-            <div className="textbox flex flex-col items-center gap-6">
-              <input
-                {...formik.getFieldProps("email")}
-                className={styles.textbox}
-                type="text"
-                placeholder="Email*"
-              />
-              <input
-                {...formik.getFieldProps("username")}
-                className={styles.textbox}
-                type="text"
-                placeholder="Username*"
-              />
-              <input
-                {...formik.getFieldProps("password")}
-                className={styles.textbox}
-                type="password"
-                placeholder="Password*"
-              />
-              <button className={styles.btn} type="submit">
-                Register
-              </button>
-            </div>
-
-            <div className="text-center py-4">
-              <span className="text-gray-500">
-                Already Register?{" "}
-                <Link className="text-red-500" to="/">
-                  Login Now
-                </Link>
-              </span>
-            </div>
-          </form>
-        </div>
+      <div className="title flex flex-col items-center">
+        <h4 className="text-5xl font-bold">Register</h4>
+        <span className="py-4 text-xl w-2/3 text-center text-gray-500">
+          Happy to join you!
+        </span>
       </div>
+
+      <form className="text-xl" onSubmit={formik.handleSubmit}>
+        <div className="profile flex justify-center py-4">
+          <label htmlFor="profile">
+            <img
+              src={file || avatar}
+              className={styles.profile_img}
+              alt="avatar"
+            />
+          </label>
+
+          <input onChange={onUpload} type="file" id="profile" name="profile" />
+        </div>
+
+        <div className="mt-2">
+          <label for="email">Email</label>
+          <input
+            {...formik.getFieldProps("email")}
+            type="text"
+            placeholder="Email*"
+            className="w-full h-8 bg-gray-200 border-solid border-2 border-black rounded block mt-2 tracking-widest pl-2"
+          />
+        </div>
+
+        <div className="mt-2">
+          <label for="username">Username</label>
+          <input
+            {...formik.getFieldProps("username")}
+            type="text"
+            placeholder="Username*"
+            className="w-full h-8 bg-gray-200 border-solid border-2 border-black rounded block mt-2 tracking-widest pl-2"
+          />
+        </div>
+
+        <div className="mt-2">
+          <label for="password">Password</label>
+          <input
+            {...formik.getFieldProps("password")}
+            type="password"
+            placeholder="Password*"
+            className="w-full h-8 bg-gray-200 border-solid border-2 border-black rounded block mt-2 tracking-widest pl-2"
+          />
+        </div>
+
+        <div className="mt-10">
+          <button
+            type="submit"
+            className="btn p-1 bg-gray-800 text-white w-full rounded-full h-12 font-bold outline-none tracking-wide"
+          >
+            Register
+          </button>
+        </div>
+        <div className="text-center py-4">
+          <span className="text-gray-500">
+            Already Register?{" "}
+            <Link className="text-red-500" to="/">
+              Login Now
+            </Link>
+          </span>
+        </div>
+      </form>
     </div>
   );
 };

@@ -7,8 +7,6 @@ import { resetPasswordValidation } from "../helper/validate";
 import useFetch from "../hooks/fetch.hook";
 import { useAuthStore } from "../store/store";
 
-import styles from "../styles/Username.module.css";
-
 export default function Reset() {
   const { username } = useAuthStore((state) => state.auth);
   const navigate = useNavigate();
@@ -54,7 +52,7 @@ export default function Reset() {
         </span>
       </div>
 
-      <form className="text-xl">
+      <form className="text-xl" onSubmit={formik.handleSubmit}>
         <div className="mt-2">
           <label for="username">Password</label>
           <input

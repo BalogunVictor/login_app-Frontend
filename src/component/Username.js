@@ -33,13 +33,13 @@ const Username = () => {
         </span>
       </div>
 
-      <form className="text-xl">
+      <form className="text-xl" onSubmit={formik.handleSubmit}>
         <div className="mt-2">
           <label for="username">Username</label>
           <input
             {...formik.getFieldProps("username")}
             type="text"
-            id="username"
+            placeholder="Username*"
             className="w-full h-8 bg-gray-200 border-solid border-2 border-black rounded block mt-2 tracking-widest pl-2"
           />
         </div>
