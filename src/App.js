@@ -10,6 +10,7 @@ import Register from "./component/Register";
 import Reset from "./component/Reset";
 import Username from "./component/Username";
 import { AuthorizeUser, ProtectRoute } from "./middleware/auth";
+import NewLoginPage from "./component/NewLoginPage";
 
 /** import middlewares */
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <PageNotFound></PageNotFound>,
+  },
+  {
+    path: "/Newlogin",
+    element: <NewLoginPage></NewLoginPage>,
   },
 ]);
 
