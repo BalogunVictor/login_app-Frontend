@@ -81,6 +81,7 @@ const Profile = () => {
                   className={`${styles.profile_img} ${extend.profile_img}`}
                   alt="avatar"
                 />
+                <p className="text-sm">Edit</p>
               </label>
 
               <input
